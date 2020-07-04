@@ -196,6 +196,10 @@ ly_visible}
 
 *flag* : **clpwn{ftp_is_completely_visible}**
 
+## wireshark display-filter関連資料
+[技術レポート「Wiresharkの活用法 その３ ～表示フィルタで絞り込む～」｜ソフテックだより｜株式会社ソフテック](https://www.softech.co.jp/mm_190807_tr.htm)
+[wireshark-filter - The Wireshark Network Analyzer 3.2.4](https://www.wireshark.org/docs/man-pages/wireshark-filter.html)
+[Wireshark · Display Filter Reference: Index](https://www.wireshark.org/docs/dfref/)
 
 # <a id="end"></a>終わりに
 今回のctfはいかがだったでしょうか。勉強会でwiresharkを簡単に学び、発展を含めてctfを通して身に着けて欲しいということで問題に取り組んでもらいました。<br>
