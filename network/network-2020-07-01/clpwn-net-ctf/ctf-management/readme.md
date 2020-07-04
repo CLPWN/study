@@ -39,7 +39,7 @@ Wordpressサーバの構築には[Ubuntu 18.04 LTS に WordPress 5.3 をイン�
 まず、これは以前からやっていたがVMのWindows 7に[FileZilla](https://filezilla-project.org/)でFTPサーバをセットアップする。<br>
 Windows 7は、[GetmyOS](https://www.getmyos.com/name/windows-7)でDLしたものを使用。一応、windows 7はファイアウォールを切った。送信側のマシンとしてはUbuntu 18.04 LTSを使用。両方のマシンをvirtualboxの内部ネットワークで同じネットワークに配置して、virtualboxのdhcpサーバでipアドレスを振る。virtualboxの内部ネットワークでipアドレス振るのは、[Vulnhubをやるための環境設定(05/14更新) - バグをバウンティしてみたい](https://rootreasure.hatenablog.jp/entry/2020/04/26/150842)を参照。<br>
 FTPサーバの方はFileZillaでuser anonymousを作って、アクセスする用のフォルダを作成して、フォルダの権限は全部つけた。<br>
-ファイル送信は、沢山ファイルを送る仕様したかったので`python`で行った。[Nippon Kaisho システムツール ランダムな文字列作成](https://www.japan9.com/cgi/rand_num.cgi)で作成したランダムな文字列のファイル名リストと、大小文字数字記号を含めた文字列のパスワード用リストを用意する。ファイル名リストには、一つだけ`password`の`rot13`を入れておく。そして、用意したファイル名リストを一行ずつ参照したファイル名のファイルを作成しながら、パスワード用リストから一行づつ読み込みファイルに書き込む操作を行い各々テキストモードでFTPで送信する。この途中で、バイナリモードで`flag.zip`を送信する。雑だが[ソースコード](/a_rot_of_txt.py)も置いておく。
+ファイル送信は、沢山ファイルを送る仕様したかったので`python`で行った。[Nippon Kaisho システムツール ランダムな文字列作成](https://www.japan9.com/cgi/rand_num.cgi)で作成したランダムな文字列のファイル名リストと、大小文字数字記号を含めた文字列のパスワード用リストを用意する。ファイル名リストには、一つだけ`password`の`rot13`を入れておく。そして、用意したファイル名リストを一行ずつ参照したファイル名のファイルを作成しながら、パスワード用リストから一行づつ読み込みファイルに書き込む操作を行い各々テキストモードでFTPで送信する。この途中で、バイナリモードで`flag.zip`を送信する。雑だが[ソースコード](./a_rot_of_txt.py)も置いておく。
 
 
 # <a id="end"></a>終わりに
