@@ -16,13 +16,13 @@ clpwn内で行った[clpwn net ctf]にて、今回のために作成した問題
 問題文から、今回のパケットキャプチャのうち暗号化されてないプロトコルを確認してみます。<br>
 [統計]->[プロトコル階層]を確認してみましょう。<br>
 
-![writeup-protocol](/img/i-see/writeup-protocol.PNG)
+![writeup-protocol](./img/i-see/writeup-protocol.PNG)
 
 これを見ると、IPv4の通信の中のTCPの`Hypertext Transfer Protocol`、つまり`HTTP`が暗号化されていないプロトコルなので気になります。<br>
 `Transport Layer Security(TLS)`の通信は暗号化されているので、他に復号の手掛かりが無いと確認できないので無視します。<br>
 では、wiresharkのdisplay filterで`http`と入力し、パケットを`http`通信のみに絞ってみましょう。<br>
 
-![http-only](/img/i-see/http-only.PNG)
+![http-only](./img/i-see/http-only.PNG)
 
 一応確認しておくと、display-filterはパケット一覧の上の入力フォームです。<br>
 `http`通信に絞り、少しパケット追っていくと`wp`が含まれるアクセスが見受けられます。<br>
@@ -33,7 +33,7 @@ clpwn内で行った[clpwn net ctf]にて、今回のために作成した問題
 `wp-login.php`へのアクセスの見られるパケットから少し進むと見つけられますが、せっかくなのでwiresharkのdisplay-filterで`HTTP`の`POST`メソッドのみを表示するようにしてみましょう。<br>
 wiresharkのdisplay filterで`http.request.method == "POST"`と入力してください。<br>
 
-![http-post](/img/i-see/http-post.PNG)
+![http-post](./img/i-see/http-post.PNG)
 
 この中で、`wp-login.php`に`POST`しているパケットでユーザ名とパスワードが送られています。<br>
 *flag* : **clpwn{mie_mie_password}**
@@ -50,7 +50,7 @@ wiresharkのdisplay filterで`http.request.method == "POST"`と入力してく�
 **DL :** [asciicmp.pcapng](../problem/asciicmp/asciicmp.pcapng)<br>
 <br>
 まず、問題文通り与えられたパケットキャプチャにて`icmp`通信を見ると、何か変なところがありますね。
-![icmp-only](/img/asciicmp/icmp-only.PNG)
+![icmp-only](./img/asciicmp/icmp-only.PNG)
 
 
 ここで、何かが変だと気づけるかどうかは経験によるものがあります。<br>
@@ -59,7 +59,7 @@ wiresharkのdisplay filterで`http.request.method == "POST"`と入力してく�
 ここで、パケットキャプチャを行う場合はwiresharkを管理者権限で実行しないとキャプチャできません。<br>
 管理者権限で実行した後に、下の方にインターフェースが出るのでyoutube等を再生して通信が確認できたものをクリックして、パケットキャプチャを開始します。<br>
 
-![adaptor](/img/asciicmp/adaptor.PNG)
+![adaptor](./img/asciicmp/adaptor.PNG)
 
 インターフェースが選択できたら、`icmp`の通信に絞って見ていきましょう。
 ```
@@ -72,7 +72,7 @@ $ ping 8.8.8.8
 このコマンドの実行時の`icmp`の通信をパケットキャプチャしてみてください。<br>
 ちなみに、`8.8.8.8`は[Google Public DNS]のipアドレスでDNSサーバとして設定すると早いとよく言われるやつです。結局ISPに指定されたDNSの方が早いこともあるんですけどね。また、ネット接続に問題が起きていそうなときにマシンがインターネットに接続できているか`ping 8.8.8.8`を実行してよく確認します。<br>
 
-![compare-icmp](/img/asciicmp/compare-icmp.PNG)
+![compare-icmp](./img/asciicmp/compare-icmp.PNG)
 
 さあ、asciicmp(左)と手元のキャプチャ(右)を比べると、それぞれが同じipアドレスへの`ping`であるに関わらず、asciicmpの方は`Length`が一定期間で変わっていることが分かります。<br>
 本来、ただ`ping`を実行しただけでこのような変化は起こりません。これは何か怪しいです。<br>
@@ -80,7 +80,7 @@ $ ping 8.8.8.8
 asciiを知らなかった人は、ここで覚えてください。[asciiコード](https://www.k-cube.co.jp/wakaba/server/ascii_code.html)と呼ばれる10進、16進と文字列を変換するものがあります。コンピュータの文字コードの基本として使われているものなので覚えておいてください。<br>
 では、今回は10進のようなので例えば[CyberChef](https://gchq.github.io/CyberChef/)等を利用して10進数からasciiコードによる文字列変換を行ってみましょう。
 
-![ascii2string-cychef](/img/asciicmp/ascii2string-cychef.PNG)
+![ascii2string-cychef](./img/asciicmp/ascii2string-cychef.PNG)
 
 このように、flagが見つかりました。<br>
 *flag* : **clpwn{found_icmp}**
@@ -99,26 +99,26 @@ asciiを知らなかった人は、ここで覚えてください。[asciiコー
 
 与えられたパケットキャプチャを見ると、ほとんどが`ftp`の通信だと思われます。<br>
 
-![ftp-protocol](/img/a-rot-of-txt/ftp-protocol.PNG)
+![ftp-protocol](./img/a-rot-of-txt/ftp-protocol.PNG)
 
 では、`ftp-data`に絞って見てみましょう。大まかに見てみると、`txt`を沢山送る中で`flag.zip`がいくつか送られているようです。<br>
 
-![ftp-data](/img/a-rot-of-txt/ftp-data.PNG)
+![ftp-data](./img/a-rot-of-txt/ftp-data.PNG)
 
 送られているファイルを確認するために、それぞれ`flag.zip`が送られているパケットで`TCPストリーム`を確認します。<br>
 ここでは、各々のzipの`TCPストリーム`を[Raw形式]で表示し[Save as...]を選択することでファイルの復元が行えます。<br>
 (※`ftp`にてバイナリモードで送信されている場合は復元できるが、テキストモードの場合は復元できない。そもそも、バイナリモードでテキスト以外のファイルを送受信した場合ファイルが破損する。忘れてたぁ（´・ω・｀）。)<br>
 とりあえず順に、[flag-first.zip],[flag-second.zip],[flag-third.zip]として保存しておきましょう。<br>
 
-![flagzip-first](/img/a-rot-of-txt/flagzip-first.PNG)
+![flagzip-first](./img/a-rot-of-txt/flagzip-first.PNG)
 
-![flagzip-second](/img/a-rot-of-txt/flagzip-second.PNG)
+![flagzip-second](./img/a-rot-of-txt/flagzip-second.PNG)
 
-![flagzip-third](/img/a-rot-of-txt/flagzip-third.PNG)
+![flagzip-third](./img/a-rot-of-txt/flagzip-third.PNG)
 
 そうして、開いてみると<br>
 
-![password-ness](/img/a-rot-of-txt/password-ness.PNG)
+![password-ness](./img/a-rot-of-txt/password-ness.PNG)
 
 パスワードが要求されました。他のzipファイルも同様にパスワードが必要なようです。<br>
 では、ここで問題文に戻ります。
@@ -133,12 +133,12 @@ password -> cnffjbeq
 ```
 このファイルは果たしてあるのか。<br>
 
-![password-rot-search](/img/a-rot-of-txt/password-rot-search.PNG)
+![password-rot-search](./img/a-rot-of-txt/password-rot-search.PNG)
 
 (ここでは`ftp and tcp matches "cnffjbeq"`で検索している)<br>
 ありましたね。では、改めて`ftp-data`で探し、ファイルの中身を見てみます。<br>
 
-![password-txt](/img/a-rot-of-txt/password-txt.PNG)
+![password-txt](./img/a-rot-of-txt/password-txt.PNG)
 
 これで、zipファイルが開けるハズです。解凍すると、それぞれのzipファイルから`flag1`,`flag2.zip`,`flag3`というファイルが取り出せます。<br>
 まず、`flag1`から見ていきましょう。
@@ -148,7 +148,7 @@ flag1: PNG image data, 150 x 150, 8-bit colormap, non-interlaced
 ```
 PNGイメージのようなので、`eog`か何か画像ビューワーで開きましょう。
 
-![flag1](/img/a-rot-of-txt/flag1.PNG)
+![flag1](./img/a-rot-of-txt/flag1.PNG)
 
 次に、`flag2.zip`を見ていきます。
 ```
