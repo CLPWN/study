@@ -148,7 +148,7 @@ flag1: PNG image data, 150 x 150, 8-bit colormap, non-interlaced
 ```
 PNGイメージのようなので、`eog`か何か画像ビューワーで開きましょう。
 
-![flag1](./img/a-rot-of-txt/flag1.PNG)
+![flag1](./img/a-rot-of-txt/flag1.png)
 
 次に、`flag2.zip`を見ていきます。
 ```
