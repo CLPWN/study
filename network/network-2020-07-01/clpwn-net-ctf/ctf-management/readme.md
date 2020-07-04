@@ -1,4 +1,4 @@
-# 今回のclpwn net ctfの構成情報色々
+# clpwn net ctfの構成情報色々
 
 - [ctfサーバ構成](#management)
 - [i see](#i-see)
