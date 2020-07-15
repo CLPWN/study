@@ -1,0 +1,40 @@
+version: "3"
+services:
+  poo_validation01:
+    build: ./docker/php
+    volumes:
+      - ./poo_validation01/:/var/www/html
+    ports:
+      - 10085:80
+    expose:
+      - 80
+    networks:
+      - myctf
+
+
+  redirect:
+    build: ./docker/php
+    volumes:
+      - ./redirect/:/var/www/html
+    ports:
+      - 10086:80
+    expose:
+      - 80
+    networks:
+      - myctf
+
+  curl01:
+    build: ./docker/php
+    volumes:
+      - ./curl01/:/var/www/html
+      - ./flags/curl01/flag.txt:/flag.txt
+    ports:
+      - 10087:80
+    expose:
+      - 80
+    networks:
+      - myctf
+
+networks:
+   myctf:
+ 
